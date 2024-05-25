@@ -53,8 +53,8 @@ USERID INTEGER);''')
 
 connection = sqlite3.connect('users.db')
 #add to Users table
-#connection.execute('INSERT INTO users.db VALUES(Sudesh, abc123456, 1)')
-#connection.execute('INSERT INTO users.db VALUES (TEST, pwd123, 2)')
+connection.execute('INSERT INTO users.db VALUES(Sudesh, abc123456, 1)')
+connection.execute('INSERT INTO users.db VALUES (TEST, pwd123, 2)')
 connection.execute('INSERT INTO users.db VALUES (TESTer, pwd1234, 3)')
 
 print('All data in users table\n')
