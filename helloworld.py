@@ -31,3 +31,38 @@ finally:
 		sqliteConnection.close()
 		print('SQLite Connection closed')
 
+import sqlite3
+
+#create connection to DB
+cnt = sqlite3.connect('user.db')
+
+# create User class table
+cnt.execute('''CREATE TABLE Users(
+USERNAME TEXT,
+PASSWORD TEXT,
+USERID INTEGER);''')
+
+#Open file in read mode
+#read image as bianary data in variable
+##fileh = open('/C:\Users\Admin\Documents\GitHub\Sudeshpython\Screenshot1.png','rb')
+##img = fileh.read()
+
+#insert tuples for realtion
+###was not created --need method ?
+##cnt.execute('''verify(UserId)
+
+connection = sqlite3.connect('users.db')
+#add to Users table
+#connection.execute('INSERT INTO users.db VALUES(Sudesh, abc123456, 1)')
+#connection.execute('INSERT INTO users.db VALUES (TEST, pwd123, 2)')
+connection.execute('INSERT INTO users.db VALUES (TESTer, pwd1234, 3)')
+
+print('All data in users table\n')
+
+# create a cousor object for select query
+cursor = connection.execute('SELECT * from users')
+
+#display all data from table
+for row in cursor:
+	print(row)
+
