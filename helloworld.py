@@ -68,8 +68,7 @@ for row in cursor:
 
 #create class method
 class User_class:
-	#input = 'username'
-
+	
 	def _init_(Self,Verify, Add, DeleteOwnMusic, View, ModOwnMusic, ModifyGenre ):
 		Self.Verify = Verify
 		Self.Add = Add
@@ -77,3 +76,7 @@ class User_class:
 		Self.View = View
 		Self.ModifyOwnMusic = ModOwnMusic
 		Self.ModifyGenre = ModifyGenre
+
+    @classmethod
+    def Add(cls, name, birthYear):
+        return cls(name, date.today().year - birthYear)
