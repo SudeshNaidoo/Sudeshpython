@@ -52,7 +52,7 @@ USERID INTEGER);''')
 ##cnt.execute('''verify(UserId)
 
 connection = sqlite3.connect('users.db')
-#add to Users table
+#add to Users table manually
 connection.execute('INSERT INTO users.db VALUES(Sudesh, abc123456, 1)')
 connection.execute('INSERT INTO users.db VALUES (TEST, pwd123, 2)')
 connection.execute('INSERT INTO users.db VALUES (TESTer, pwd1234, 3)')
@@ -66,3 +66,14 @@ cursor = connection.execute('SELECT * from users')
 for row in cursor:
 	print(row)
 
+#create class method
+class User_class:
+	#input = 'username'
+
+	def _init_(Self,Verify, Add, DeleteOwnMusic, View, ModOwnMusic, ModifyGenre ):
+		Self.Verify = Verify
+		Self.Add = Add
+		Self.DeleteOwnMusic = DeleteOwnMusic
+		Self.View = View
+		Self.ModifyOwnMusic = ModOwnMusic
+		Self.ModifyGenre = ModifyGenre
