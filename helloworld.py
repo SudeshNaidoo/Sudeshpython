@@ -77,6 +77,14 @@ class User_class:
 		Self.ModifyOwnMusic = ModOwnMusic
 		Self.ModifyGenre = ModifyGenre
 
-    @classmethod
-    def Add(cls, name, birthYear):
-        return cls(name, date.today().year - birthYear)
+    ##@classmethod
+    ##def Add(self, name, birthYear):
+       ## return cls(name, date.today().year - birthYear)
+
+ #create Music_class
+class Music_class:
+	def _init_(self,Play ,Download, Upload, Modify):
+		self.Play = Play
+		self.Download = Download
+		self.Upload = Upload
+		self.Modify = Modify
