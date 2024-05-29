@@ -1,7 +1,11 @@
 
 import sqlite3
+import datetime
+
 conn = sqlite3.connect('user.db')
 cur = conn.cursor()
+
+currentDateTime = datetime.datetime.now()
 
 # MusicClass.py
 class Music_class:
@@ -13,19 +17,18 @@ def method():
     print("OUTPUT")
 
 
-def add(USERNAME,MusicName ,MusicID, MusicLyrics, MusicScore, MusicType, CreationDate, ModDate):
+def add(USERNAME,MusicName , MusicLyrics, MusicScore, MusicType):
 
-    insert_query = "INSERT INTO Music (USERNAME,MusicName ,MusicID, MusicLyrics, MusicScore, MusicType, CreationDate, ModDate) VALUES (?, ?, ?, ?, ?, ? ,? ,?)"
-    conn.execute(insert_query, (USERNAME,MusicName ,MusicID, MusicLyrics, MusicScore, MusicType, CreationDate, ModDate))
+    insert_query = "INSERT INTO Music (USERNAME,MusicName , MusicLyrics, MusicScore, MusicType, CreationDate, ModDate) VALUES (?, ?, ?, ?, ?, ? ,?)"
+    conn.execute(insert_query, (USERNAME,MusicName , MusicLyrics, MusicScore, MusicType, currentDateTime, currentDateTime))
     conn.commit()
     #conn.close()
+    viewAll()
     
 
-    print('Added User '+ USERNAME)
 
-
-def view(USERNAME):
-    cur.execute('select * from Music where USERNAME = '+USERNAME)
+def view(username):
+    cur.execute('select * from Music where USERNAME = ?',(username,))
     rows = cur.fetchall()
 
     for row in rows:
@@ -47,16 +50,18 @@ def view(USERNAME):
 def viewAll():
     cur.execute('select * from Music')
     rows = cur.fetchall()
-
+    print('Viewing all Music')
+    print()
     for row in rows:
         print(row)
+    #conn.close()
 
 
 def initialise():
     conn.execute('''DROP TABLE Music''')
-    conn.execute(""" CREATE TABLE MUSIC (MusicID INTEGER PRIMARY KEY,
+    conn.execute(""" CREATE TABLE Music (MusicID INTEGER PRIMARY KEY,
 MusicName CHAR(25) NOT NULL,
-MusicLyrics CHAR (255), MusicScore INTEGER(25), MusicType CHAR(20), USERNAME INTEGER, CreationDate INTEGER(08), ModDate INTEGER(8) );""");
+MusicLyrics CHAR (255), MusicScore INTEGER(25), MusicType CHAR(20), USERNAME INTEGER, CreationDate TIMESTAMP, ModDate TIMESTAMP);""");
     
 	
 
