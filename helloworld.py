@@ -36,11 +36,11 @@ import sqlite3
 #create connection to DB
 cnt = sqlite3.connect('user.db')
 
-# create User class table
-cnt.execute('''CREATE TABLE Users(
-USERNAME TEXT,
-PASSWORD TEXT,
-USERID INTEGER);''')
+# create User class table - hashed to remove duplication 
+#cnt.execute('''CREATE TABLE Users(
+#USERNAME TEXT,
+#PASSWORD TEXT,
+#USERID INTEGER);''')
 
 #Open file in read mode
 #read image as bianary data in variable
@@ -52,10 +52,10 @@ USERID INTEGER);''')
 ##cnt.execute('''verify(UserId)
 
 connection = sqlite3.connect('users.db')
-#add to Users table manually
-connection.execute('INSERT INTO users.db VALUES(Sudesh, abc123456, 1)')
-connection.execute('INSERT INTO users.db VALUES (TEST, pwd123, 2)')
-connection.execute('INSERT INTO users.db VALUES (TESTer, pwd1234, 3)')
+#add to Users table manually test DB
+#connection.execute('INSERT INTO users.db VALUES(Sudesh, abc123456, 1)')
+#connection.execute('INSERT INTO users.db VALUES (TEST, pwd123, 2)')
+#connection.execute('INSERT INTO users.db VALUES (TESTer, pwd1234, 3)')
 
 print('All data in users table\n')
 
