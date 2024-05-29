@@ -19,6 +19,7 @@ def MainMenu():
     print('2 - View All Music')
     print('3 - Delete Your Music')
     print('4 - Upload Your Music')
+    print()
     
 
     
