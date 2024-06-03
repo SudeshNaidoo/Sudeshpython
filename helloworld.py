@@ -1,5 +1,40 @@
 
 import sqlite3
+from pysqlitecipher import sqlitewrapper
+
+class obj:
+	def _init_(self,tableName ,colList, insertList, iDValue, colName, colValue, newPass ):
+		self.tableName = tableName
+		self.colList = colList
+		self.insertList = insertList
+		self.iDValue = iDValue
+		self.colName = colName
+		self.colValue = colValue
+		self.newPass = newPass
+
+
+# make the object 
+
+obj = sqlitewrapper.SqliteCipher(datBasePath="pysqlitecipher.db" ,checkSameThread=False , password=None)
+obj.createTable(tableName , colList ,makesSecure=True , commit=True)
+
+colList = [
+	[colname , datatype] ,
+	[colname2 , datatype] ,
+]
+
+obj.insertIntoTable(tableName , insertList , commit = True)
+
+obj.getDataFromTable(tableName , raiseConversionError = True , omitID = False)
+
+obj.deleteDataInTable(tableName , iDValue , commit= True , raiseError= True , updateId = True)
+
+obj.getDataFromTable(tableName , raiseConversionError = True , omitID = False)
+
+obj.updateInTable(tableName , iDValue ,colName , colValue , commit = True , raiseError = True)
+obj.changePassword(newPass)
+
+
 
 try:
 
@@ -88,3 +123,4 @@ class Music_class:
 		self.Download = Download
 		self.Upload = Upload
 		self.Modify = Modify
+
