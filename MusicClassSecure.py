@@ -130,3 +130,15 @@ def initialise():
     ['MOdDate', 'TIMESTAMP']
 
      ]
+    
+    def printTableData(dataarray):
+        print(dataarray[0][0].ljust(4,' ')+dataarray[0][1].ljust(10,' ')+dataarray[0][2].ljust(10,' '))
+        for v in dataarray[1]: 
+            print(str(v[0]).ljust(4,' ')+v[1].ljust(10,' ')+str(v[2]).ljust(10,' '))
+
+            #test insert list 
+		
+    insertList = ['Mr Bombastic', 'lyrics', 10, 'pop', 1234567]
+    obj.insertIntoTable('testtable1' , insertList , commit = True)
+    
+    
