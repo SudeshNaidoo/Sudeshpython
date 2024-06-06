@@ -15,21 +15,29 @@ class obj:
 
 # make the object 
 
-obj = sqlitewrapper.SqliteCipher(datBasePath="pysqlitecipher.db" ,checkSameThread=False , password=None)
-obj.createTable(tableName , colList ,makesSecure=True , commit=True)
-
+obj = sqlitewrapper.SqliteCipher (dataBasePath="pysqlitecipher.db" ,checkSameThread=False , password='keypassword123456')
 colList = [
-	[colname , datatype] ,
-	[colname2 , datatype] ,
+	['music', 'CHAR' ] ,
+	['whatever' , 'int' ] ,
 ]
 
-obj.insertIntoTable(tableName , insertList , commit = True)
+## created table # out after creation
+##obj.createTable('testtable' , colList, makeSecure=True , commit=True)
+
+
+insertList = ['musictest', 89]
+obj.insertIntoTable('testtable' , insertList , commit = True)
+
+print(
+obj.getDataFromTable('testtable' , raiseConversionError = True , omitID = False))
+
+##obj.deleteDataInTable('testtable' , 0 , commit= True , raiseError= True , updateId = True)
+
+##print(
+##obj.getDataFromTable('testtable' , raiseConversionError = True , omitID = False))
 
 obj.getDataFromTable(tableName , raiseConversionError = True , omitID = False)
 
-obj.deleteDataInTable(tableName , iDValue , commit= True , raiseError= True , updateId = True)
-
-obj.getDataFromTable(tableName , raiseConversionError = True , omitID = False)
 
 obj.updateInTable(tableName , iDValue ,colName , colValue , commit = True , raiseError = True)
 obj.changePassword(newPass)
