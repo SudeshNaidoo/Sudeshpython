@@ -1,6 +1,6 @@
 import sqlite3
 import datetime
-
+from pysqlitecipher import sqlitewrapper
 
 
 
@@ -8,6 +8,7 @@ conn = sqlite3.connect('user.db')
 cur = conn.cursor()
 
 currentDateTime = datetime.datetime.now()
+
 
 # make the object 
 
@@ -103,9 +104,11 @@ def initialise():
 ##MusicName CHAR(25) NOT NULL,
 ##MusicLyrics CHAR (255), MusicScore INTEGER(25), MusicType CHAR(20), USERNAME INTEGER, CreationDate TIMESTAMP, ModDate TIMESTAMP);""");
 
-#Secure Table creation 
-    obj.createTable('Music' , colList, makeSecure=True , commit=True)
-    colList = [
+
+# make the object 
+
+ obj = sqlitewrapper.SqliteCipher (dataBasePath="music.db" ,checkSameThread=False , password='keypassword123456')
+colList = [
 	['MusicName', 'CHAR' ],
 	['MusicLyrics' , 'CHAR' ],
     ['MusicScore', 'INT'],
@@ -113,13 +116,30 @@ def initialise():
     ['USERNAME','INT'],
     ['CreationDate', 'TIMESTAMP'],
     ['MusicID', 'INT PRIMARY KEY'],
-    ['MOdDate', 'TIMESTAMP']
+    ['ModDate', 'TIMESTAMP']
 
-     ]
+]
+
+## created table hashed out after creation
+##obj.createTable('music' , colList, makeSecure=True , commit=True)
+
+#Secure Table creation
+#obj.createTable('Music' , colList, makeSecure=True , commit=True)
+#colList = [
+#	['MusicName', 'CHAR' ],
+#	['MusicLyrics' , 'CHAR' ],
+ #   ['MusicScore', 'INT'],
+ #   ['MusicType', 'CHAR'],
+ #   ['USERNAME','INT'],
+ #   ['CreationDate', 'TIMESTAMP'],
+ #   ['MusicID', 'INT PRIMARY KEY'],
+ #   ['ModDate', 'TIMESTAMP']
+#
+ #    ]
     
     #Encrypt music table DB
-    obj = sqlitewrapper.SqliteCipher (dataBasePath="MusicDBSecure.db" ,checkSameThread=False , password='keypassword123456')
-    colList = [
+obj = sqlitewrapper.SqliteCipher (dataBasePath="MusicDBSecure.db" ,checkSameThread=False , password='keypassword123456')
+colList = [
 	['MusicName', 'CHAR' ],
 	['MusicLyrics' , 'CHAR' ],
     ['MusicScore', 'INT'],
@@ -127,18 +147,24 @@ def initialise():
     ['USERNAME','INT'],
     ['CreationDate', 'TIMESTAMP'],
     ['MusicID', 'INT PRIMARY KEY'],
-    ['MOdDate', 'TIMESTAMP']
+    ['ModDate', 'TIMESTAMP']
 
      ]
     
-    def printTableData(dataarray):
-        print(dataarray[0][0].ljust(4,' ')+dataarray[0][1].ljust(10,' ')+dataarray[0][2].ljust(10,' '))
+def printTableData(dataarray):
+        print(dataarray[0][0].ljust(4,' ')+dataarray[0][1].ljust(10,' ')+dataarray[0][2].ljust(10,' ')+dataarray[0][3].ljust(10,' ')+dataarray[0][4].ljust(10,' '))
         for v in dataarray[1]: 
-            print(str(v[0]).ljust(4,' ')+v[1].ljust(10,' ')+str(v[2]).ljust(10,' '))
+            print(dataarray[0][0].ljust(4,' ')+dataarray[0][1].ljust(10,' ')+dataarray[0][2].ljust(10,' ')+dataarray[0][3].ljust(10,' ')+dataarray[0][4].ljust(10,' '))
 
             #test insert list 
 		
-    insertList = ['Mr Bombastic', 'lyrics', 10, 'pop', 1234567]
-    obj.insertIntoTable('testtable1' , insertList , commit = True)
+insertList = ['Mr Bombastic', 'lyrics', 10, 'pop', 1234567]
+obj.insertIntoTable('Music' , insertList , commit = True)
     
+printTableData(
+obj.getDataFromTable('Music' , raiseConversionError = True , omitID = False))
     
+#obj.deleteDataInTable('Music' , 0 , commit= True , raiseError= True , updateId = True)
+
+
+
