@@ -96,7 +96,7 @@ currentDateTime = datetime.datetime.now()
     #conn.close()
 
 
-def initialise():
+#def initialise():
 
     ##insecure table creation 
     ##conn.execute('''DROP TABLE Music''')
@@ -119,7 +119,7 @@ colList = [
     ['ModDate', 'TIMESTAMP']
 
 ]
-
+def initialise():
 ## created table hashed out after creation
 ##obj.createTable('music' , colList, makeSecure=True , commit=True)
 
@@ -138,18 +138,7 @@ colList = [
  #    ]
     
     #Encrypt music table DB
-obj = sqlitewrapper.SqliteCipher (dataBasePath="MusicDBSecure.db" ,checkSameThread=False , password='keypassword123456')
-colList = [
-	['MusicName', 'CHAR' ],
-	['MusicLyrics' , 'CHAR' ],
-    ['MusicScore', 'INT'],
-    ['MusicType', 'CHAR'],
-    ['USERNAME','INT'],
-    ['CreationDate', 'TIMESTAMP'],
-    ['MusicID', 'INT PRIMARY KEY'],
-    ['ModDate', 'TIMESTAMP']
 
-     ]
     
 def printTableData(dataarray):
         print(dataarray[0][0].ljust(4,' ')+dataarray[0][1].ljust(10,' ')+dataarray[0][2].ljust(10,' ')+dataarray[0][3].ljust(10,' ')+dataarray[0][4].ljust(10,' '))
