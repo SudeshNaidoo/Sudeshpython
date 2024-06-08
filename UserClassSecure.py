@@ -1,6 +1,7 @@
 
 import datetime
 from pysqlitecipher import sqlitewrapper
+import hashlib
 
 
 currentDateTime = datetime.datetime.now()
@@ -17,57 +18,76 @@ class UserClassSecure:
 def method():
     print("OUTPUT")
 
+def hash_password(username, password):
 
-def add(USERNAME, Password, UserId):
+    SudeshsSpecialSalt = 'SaltyIsntThis'
+    combined_string = f"{username}:{password}:{SudeshsSpecialSalt}"
+    #print(combined_string)
+    
+    hashed = hashlib.sha512(combined_string.encode()).hexdigest()
+    #print(hashed)
+    
+    return hashed
 
-    insert_query = "INSERT INTO Music (USERNAME,Password , Userid) VALUES (?, ?, ?)"
+def add(Username, Password):
 
-    viewAll()
+    hashedPassword = hash_password(username=Username,password=Password)
+    insertList = [Username,hashedPassword]
+    obj.insertIntoTable('user' , insertList , commit = True)
+    print('Record inserted successfully')
     
 
 
-def view(USERNAME):
-    #cur.execute('select * from Music where USERNAME = ?',(username,))
-    rows = cur.fetchall()
+def printTableData(dataarray,username):
+    if username == 'ALL':
+        print(dataarray[0][0].ljust(5,' ')+dataarray[0][1].ljust(30,' ')+dataarray[0][2].ljust(200,' '))
+    else:
+        print(dataarray[0][0].ljust(5,' ')+dataarray[0][1].ljust(30,' '))
+        
+    for v in dataarray[1]:
+        if username == 'ALL':
+              print(str(v[0]).ljust(5,' ')+v[1].ljust(30,' ')+str(v[2]).ljust(200,' '))
+        else:
+              if v[1] == username:
+                  print(str(v[0]).ljust(5,' ')+v[1].ljust(30,' '))
 
-    for row in rows:
-        print(row)
+                      
+        
+          
+def verify(username,password):
+    dataarray = obj.getDataFromTable('user' , raiseConversionError = True , omitID = False)
+    for v in dataarray[1]:
+        if v[1] == username and v[2] == hash_password(username=username,password=password):
+            return 'Y'
+        else:
+            return 'N'
+        
+
+          
+		
 
 
-##def verify(username,password):
-  ##  cur.execute('select * from Users where USERNAME = ? and PASSWORD = ?',(username,password))
-  ##  rows = cur.fetchall()
+def view(username):
+    printTableData(
+    obj.getDataFromTable('user' , raiseConversionError = True , omitID = False),username)
 
-   ### for row in rows:
-    ##    return 'Y'
-    
-  ##  return 'N'
-
-    
 
 
 def viewAll():
-    #cur.execute('select * from Music')
-    rows = cur.fetchall()
-    print('Viewing all Music')
-    print()
-    for row in rows:
-        print(row)
-    #conn.close()
+    printTableData(
+    obj.getDataFromTable('user' , raiseConversionError = True , omitID = False),'ALL')
+
+
 
 
 def initialise():
-#        conn.execute(""" CREATE TABLE Music (MusicID INTEGER PRIMARY KEY,
-#MusicName CHAR(25) NOT NULL,
-#MusicLyrics CHAR (255), MusicScore INTEGER(25), MusicType CHAR(20), USERNAME INTEGER, CreationDate TIMESTAMP, ModDate TIMESTAMP);""");
 
     colList = [
 	['Username', 'int' ] ,
 	['Password' , 'char' ],
-    ['UserID','char'],
-    
+    ['Admin','char']
     ]    
 
-    obj.createTable('User' , colList, makeSecure=True , commit=True)
+    obj.createTable('user' , colList, makeSecure=True , commit=True)
 
     
