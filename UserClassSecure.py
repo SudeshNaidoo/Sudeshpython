@@ -29,10 +29,10 @@ def hash_password(username, password):
     
     return hashed
 
-def add(Username, Password):
+def add(Username, Password,AdminFlag):
 
     hashedPassword = hash_password(username=Username,password=Password)
-    insertList = [Username,hashedPassword]
+    insertList = [Username,hashedPassword,AdminFlag]
     obj.insertIntoTable('user' , insertList , commit = True)
     print('Record inserted successfully')
     
@@ -63,6 +63,13 @@ def verify(username,password):
             return 'N'
         
 
+def isAdmin(username):
+    dataarray = obj.getDataFromTable('user' , raiseConversionError = True , omitID = False)
+    for v in dataarray[1]:
+        if v[3] == 'Y':
+            return True
+        else:
+            return False
           
 		
 
