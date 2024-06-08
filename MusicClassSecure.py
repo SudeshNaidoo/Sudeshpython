@@ -18,10 +18,9 @@ def method():
     print("OUTPUT")
 
 
-def add(USERNAME,MusicName , MusicLyrics, MusicScore, MusicType):
-
-    insert_query = "INSERT INTO Music (USERNAME,MusicName , MusicLyrics, MusicScore, MusicType, CreationDate, ModDate) VALUES (?, ?, ?, ?, ?, ? ,?)"
-
+def add(UserName,MusicName , MusicLyrics, MusicScore, MusicType):
+    insertList = [MusicName,MusicLyrics,MusicScore,MusicType,UserName,currentDateTime]
+    obj.insertIntoTable('music' , insertList , commit = True)
     viewAll()
     
 
@@ -33,41 +32,28 @@ def view(username):
     for row in rows:
         print(row)
 
-
-##def verify(username,password):
-  ##  cur.execute('select * from Users where USERNAME = ? and PASSWORD = ?',(username,password))
-  ##  rows = cur.fetchall()
-
-   ### for row in rows:
-    ##    return 'Y'
-    
-  ##  return 'N'
-
-    
+def printTableData(dataarray):
+	print(dataarray[0][0].ljust(4,' ')+dataarray[0][1].ljust(10,' ')+dataarray[0][2].ljust(10,' '))
+	for v in dataarray[1]:
+		print(str(v[0]).ljust(4,' ')+v[1].ljust(10,' ')+str(v[2]).ljust(10,' '))
 
 
 def viewAll():
-    #cur.execute('select * from Music')
-    rows = cur.fetchall()
-    print('Viewing all Music')
-    print()
-    for row in rows:
-        print(row)
-    #conn.close()
+    printTableData(
+    obj.getDataFromTable('music' , raiseConversionError = True , omitID = False))
 
 
 def initialise():
-#        conn.execute(""" CREATE TABLE Music (MusicID INTEGER PRIMARY KEY,
-#MusicName CHAR(25) NOT NULL,
-#MusicLyrics CHAR (255), MusicScore INTEGER(25), MusicType CHAR(20), USERNAME INTEGER, CreationDate TIMESTAMP, ModDate TIMESTAMP);""");
 
-    colList = [
-	['MusicID', 'int' ] ,
-	['MusicName' , 'char' ],
-    ['MusicLyrics','char'],
-    ['MusicScore','int'],
-    ['MusicType','char'],
-    ['UserName','int'],
-    ['CreationDate','char']]
-    
-    obj.createTable('music' , colList, makeSecure=True , commit=True)
+    if obj.checkTableExist('music'):
+        print('Table already exists - ignoring')
+    else:    
+        colList = [
+        ['MusicName' , 'char' ],
+        ['MusicLyrics','char'],
+        ['MusicScore','int'],
+        ['MusicType','char'],
+        ['UserName','int'],
+        ['CreationDate','char']]
+        
+        obj.createTable('music' , colList, makeSecure=True , commit=True)
