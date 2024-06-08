@@ -3,14 +3,13 @@ import datetime
 from pysqlitecipher import sqlitewrapper
 
 
-
 currentDateTime = datetime.datetime.now()
 
 obj = sqlitewrapper.SqliteCipher (dataBasePath="music.db" ,checkSameThread=False , password='keypassword123456')
 
 
-# MusicClass.py
-class Music_class:
+# MusicClassSecure.py
+class MusicClassSecure:
 
     def add(self,a,b):
         return a
@@ -22,15 +21,13 @@ def method():
 def add(USERNAME,MusicName , MusicLyrics, MusicScore, MusicType):
 
     insert_query = "INSERT INTO Music (USERNAME,MusicName , MusicLyrics, MusicScore, MusicType, CreationDate, ModDate) VALUES (?, ?, ?, ?, ?, ? ,?)"
-    conn.execute(insert_query, (USERNAME,MusicName , MusicLyrics, MusicScore, MusicType, currentDateTime, currentDateTime))
-    conn.commit()
-    #conn.close()
+
     viewAll()
     
 
 
 def view(username):
-    cur.execute('select * from Music where USERNAME = ?',(username,))
+    #cur.execute('select * from Music where USERNAME = ?',(username,))
     rows = cur.fetchall()
 
     for row in rows:
@@ -50,7 +47,7 @@ def view(username):
 
 
 def viewAll():
-    cur.execute('select * from Music')
+    #cur.execute('select * from Music')
     rows = cur.fetchall()
     print('Viewing all Music')
     print()
@@ -65,7 +62,12 @@ def initialise():
 #MusicLyrics CHAR (255), MusicScore INTEGER(25), MusicType CHAR(20), USERNAME INTEGER, CreationDate TIMESTAMP, ModDate TIMESTAMP);""");
 
     colList = [
-	['music', 'CHAR' ] ,
-	['whatever' , 'int' ]]
+	['MusicID', 'int' ] ,
+	['MusicName' , 'char' ],
+    ['MusicLyrics','char'],
+    ['MusicScore','int'],
+    ['MusicType','char'],
+    ['UserName','int'],
+    ['CreationDate','char']]
     
-    obj.createTable('testtable' , colList, makeSecure=True , commit=True)
+    obj.createTable('music' , colList, makeSecure=True , commit=True)

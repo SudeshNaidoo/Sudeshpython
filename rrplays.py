@@ -1,0 +1,6 @@
+import MusicClassSecure
+
+
+MusicClassSecure.initialise()
+
+
