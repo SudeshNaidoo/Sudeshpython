@@ -93,6 +93,8 @@ def viewAll():
     printTableData(
     obj.getDataFromTable('user' , raiseConversionError = True , omitID = False),'ALL')
 
+  
+    
 
 def initialise():
 #Initializes the 'user'
@@ -104,4 +106,14 @@ def initialise():
 
     obj.createTable('user' , colList, makeSecure=True , commit=True)
 
+  # Initializes the 'CheckIfTableIsSecure' table
+    check_table_colList = [
+        # Define your columns here (e.g., ['Column1', 'datatype'], ['Column2', 'datatype'], ...)
+        # Example:
+        ['Username', 'int'],
+        ['Password', 'char'],
+        ['Admin', 'char']
+    ]
     
+    obj.createTable('CheckIfTableIsSecure', check_table_colList, makeSecure=True, commit=True)
+
