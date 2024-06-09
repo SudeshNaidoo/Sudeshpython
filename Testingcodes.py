@@ -1,13 +1,18 @@
 import MusicClassSecure
 import UserClassSecure
 
-#UserClassSecure.initialise()
-#UserClassSecure.add(Username='User1',Password='User1Pa$$word',AdminFlag='N')
-#
-# UserClassSecure.add(Username='User2',Password='User2Pa$$word',AdminFlag='N')
-print(UserClassSecure.verify(username='User2',password='User2Pa$$word'))
+### you can test all inputs from the Mainprog
 
-UserClassSecure.viewAll()
+## use below to Initialise , remove the hashes to run tests
+
+#UserClassSecure.initialise()
+
+#UserClassSecure.add(Username='User1',Password='User1Password',AdminFlag='N')
+#
+# UserClassSecure.add(Username='User2',Password='User2Password',AdminFlag='N')
+# print(UserClassSecure.verify(username='User2',password='User2Pa$$word'))
+
+#UserClassSecure.viewAll()
 #UserClassSecure.view('test')
 #print(UserClassSecure.verify(username='test',password='password1'))
 
