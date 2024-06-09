@@ -3,9 +3,10 @@ import datetime
 from pysqlitecipher import sqlitewrapper
 import hashlib
 
-
+# Get the current date and time
 currentDateTime = datetime.datetime.now()
 
+#Initialize the SQLite database with encryption
 obj = sqlitewrapper.SqliteCipher (dataBasePath="music.db" ,checkSameThread=False , password='keypassword123456')
 
 
@@ -19,6 +20,7 @@ def method():
     print("OUTPUT")
 
 def hash_password(username, password):
+#Hashes the password using a special salt.
 
     SudeshsSpecialSalt = 'SaltyIsntThis'
     combined_string = f"{username}:{password}:{SudeshsSpecialSalt}"
@@ -30,7 +32,7 @@ def hash_password(username, password):
     return hashed
 
 def add(Username, Password,AdminFlag):
-
+# Adds a user record to the 'user' table in the database.
     hashedPassword = hash_password(username=Username,password=Password)
     insertList = [Username,hashedPassword,AdminFlag]
     obj.insertIntoTable('user' , insertList , commit = True)
@@ -39,6 +41,7 @@ def add(Username, Password,AdminFlag):
 
 
 def printTableData(dataarray,username):
+    # Prints data from the 'user' table based on the username provided.
     if username == 'ALL':
         print(dataarray[0][0].ljust(5,' ')+dataarray[0][1].ljust(30,' ')+dataarray[0][2].ljust(200,' '))
     else:
@@ -46,8 +49,10 @@ def printTableData(dataarray,username):
         
     for v in dataarray[1]:
         if username == 'ALL':
+           # Print data for all records
               print(str(v[0]).ljust(5,' ')+v[1].ljust(30,' ')+str(v[2]).ljust(200,' '))
         else:
+               # Print data for specific user
               if v[1] == username:
                   print(str(v[0]).ljust(5,' ')+v[1].ljust(30,' '))
 
@@ -55,6 +60,7 @@ def printTableData(dataarray,username):
         
           
 def verify(username,password):
+    # Verifies the user's credentials.
     dataarray = obj.getDataFromTable('user' , raiseConversionError = True , omitID = False)
     for v in dataarray[1]:
         if v[1] == username and v[2] == hash_password(username=username,password=password):
@@ -64,31 +70,32 @@ def verify(username,password):
         
 
 def isAdmin(username):
+    #Checks if the user is an admin.
     dataarray = obj.getDataFromTable('user' , raiseConversionError = True , omitID = False)
     for v in dataarray[1]:
         if v[3] == 'Y':
-            return True
+            return 'Y'
         else:
-            return False
+            return 'N'
           
 		
 
 
 def view(username):
+    # Prints user records for a specific user.
     printTableData(
     obj.getDataFromTable('user' , raiseConversionError = True , omitID = False),username)
 
 
 
 def viewAll():
+    #Prints all user records.
     printTableData(
     obj.getDataFromTable('user' , raiseConversionError = True , omitID = False),'ALL')
 
 
-
-
 def initialise():
-
+#Initializes the 'user'
     colList = [
 	['Username', 'int' ] ,
 	['Password' , 'char' ],
