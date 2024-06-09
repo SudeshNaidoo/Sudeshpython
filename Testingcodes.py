@@ -7,7 +7,7 @@ import UserClassSecure
 
 #UserClassSecure.initialise()
 
-#UserClassSecure.add(Username='User1',Password='User1Password',AdminFlag='N')
+UserClassSecure.add(Username='User3',Password='User3Password',AdminFlag='N')
 #
 # UserClassSecure.add(Username='User2',Password='User2Password',AdminFlag='N')
 # print(UserClassSecure.verify(username='User2',password='User2Pa$$word'))

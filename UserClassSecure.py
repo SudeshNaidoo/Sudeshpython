@@ -22,7 +22,7 @@ def hash_password(username, password):
 
     SudeshsSpecialSalt = 'SaltyIsntThis'
     combined_string = f"{username}:{password}:{SudeshsSpecialSalt}"
-    #print(combined_string)
+    #print(combined_string) with salt
     
     hashed = hashlib.sha512(combined_string.encode()).hexdigest()
     #print(hashed)
