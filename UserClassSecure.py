@@ -43,14 +43,14 @@ def add(Username, Password,AdminFlag):
 def printTableData(dataarray,username):
     # Prints data from the 'user' table based on the username provided.
     if username == 'ALL':
-        print(dataarray[0][0].ljust(5,' ')+dataarray[0][1].ljust(30,' ')+dataarray[0][2].ljust(200,' '))
+        print(dataarray[0][0].ljust(5,' ')+dataarray[0][1].ljust(30,' ')+dataarray[0][2].ljust(200,' ')+dataarray[0][3].ljust(7,' '))
     else:
         print(dataarray[0][0].ljust(5,' ')+dataarray[0][1].ljust(30,' '))
         
     for v in dataarray[1]:
         if username == 'ALL':
            # Print data for all records
-              print(str(v[0]).ljust(5,' ')+v[1].ljust(30,' ')+str(v[2]).ljust(200,' '))
+              print(str(v[0]).ljust(5,' ')+v[1].ljust(30,' ')+str(v[2]).ljust(200,' ')+str(v[3]).ljust(7,' '))
         else:
                # Print data for specific user
               if v[1] == username:
@@ -63,20 +63,20 @@ def verify(username,password):
     # Verifies the user's credentials.
     dataarray = obj.getDataFromTable('user' , raiseConversionError = True , omitID = False)
     for v in dataarray[1]:
-        if v[1] == username and v[2] == hash_password(username=username,password=password):
-            return 'Y'
-        else:
-            return 'N'
+        if v[1] == username:
+            if v[2] == hash_password(username=username,password=password):
+                return 'Y'
+    return 'N'
         
 
 def isAdmin(username):
     #Checks if the user is an admin.
     dataarray = obj.getDataFromTable('user' , raiseConversionError = True , omitID = False)
     for v in dataarray[1]:
-        if v[3] == 'Y':
-            return 'Y'
-        else:
-            return 'N'
+        if v[1] == username:
+            if v[3] == 'Y':
+                return 'Y'
+    return 'N'
           
 		
 

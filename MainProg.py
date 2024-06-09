@@ -17,7 +17,7 @@ def MainMenu(username):
     print('1 - View Your Music')
     print('2 - Delete Your Music')
     print('3 - Upload Your Music')
-    if UserClassSecure.isAdmin(username=username):
+    if UserClassSecure.isAdmin(username=username) == 'Y':
         print('4 - View All Music')
     print('9 - Exit')
     print()
